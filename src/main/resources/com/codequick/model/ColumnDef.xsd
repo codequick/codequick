@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" version="1.0"
+	targetNamespace="http://model.codequick.com"
+	xmlns:tns="http://model.codequick.com" 
+	elementFormDefault="qualified">
+	
+	<include schemaLocation="TableDef.xsd" />
+
+	<complexType name="ColumnDef">
+		<sequence>
+			<element name="catalog" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="schema" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="tableName" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="columnName" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="dataType" type="int" minOccurs="0" maxOccurs="1" />
+			<element name="typeName" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="columnSize" type="int" minOccurs="0" maxOccurs="1" />
+			<element name="decimalDigits" type="int" minOccurs="0" maxOccurs="1" />
+			<element name="radix" type="int" minOccurs="0" maxOccurs="1" />
+			<element name="nullable" type="int" minOccurs="0" maxOccurs="1" />
+			<element name="remarks" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="columnDefault" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="charOctetLength" type="int" minOccurs="0" maxOccurs="1" />
+			<element name="ordinalPosition" type="int" minOccurs="0" maxOccurs="1" />
+			<element name="isNullable" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="scopeCatalog" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="scopeSchema" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="scopeTable" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="sourceDataType" type="short" minOccurs="0" maxOccurs="1" />
+			<element name="isAutoincrement" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="shortColumnName" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="propertyName" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="propertyType" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="fkTableDef" type="tns:TableDef" minOccurs="0" maxOccurs="1" />
+			<element name="tableDef" type="tns:TableDef" minOccurs="0" maxOccurs="1" />
+			<element name="fieldType" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="keySeq" type="short" minOccurs="0" maxOccurs="1" />
+			<element name="identity" type="boolean" minOccurs="0" maxOccurs="1" />
+		</sequence>
+	</complexType>
+
+</schema>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" version="1.0"
+	targetNamespace="http://model.codequick.com"
+	xmlns:tns="http://model.codequick.com" 
+	elementFormDefault="qualified">
+	
+	<include schemaLocation="ColumnDef.xsd" />
+
+	<complexType name="TableDef">
+		<sequence>
+			<annotation>
+				<documentation>Table defs</documentation>
+			</annotation>
+			<element name="catalog" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="schema" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="name" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="type" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="remarks" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="typeCatalog" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="typeSchema" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="typeName" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="selfReferencingColName" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="refGeneration" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="packageName" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="className" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="pkName" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="columnDefs" type="tns:ColumnDef" minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+	
+	<element name="TableDef" type="tns:TableDef" />
+	
+</schema>
