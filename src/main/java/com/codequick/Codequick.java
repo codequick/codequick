@@ -21,15 +21,16 @@ public class Codequick {
 	
 	private static boolean isExport;
 	private static boolean isBuild;
-	private static String configPath = WORKING_DIRECTORY + "/config/config.properties";
-	private static Package pkg = Codequick.class.getPackage();
+	
+	public static final String CONFIG_PATH = WORKING_DIRECTORY + "/config/";
+	private static final String CONFIG_FILE = "config.properties";
+	private static final Package PKG = Codequick.class.getPackage();
 	
     public static void main (String[] args) throws Exception {
     	
-    	
     	System.out.format("Starting %s - Version %s.%n"
-    			, pkg.getSpecificationTitle()
-    			, pkg.getSpecificationVersion());
+    			, PKG.getSpecificationTitle()
+    			, PKG.getSpecificationVersion());
     	
     	initialize(args);
     	
@@ -37,11 +38,11 @@ public class Codequick {
     
     private static void initialize (String[] args) throws Exception {
     	
-    	System.out.format("Initializing %s.%n", pkg.getSpecificationTitle());
+    	System.out.format("Initializing %s.%n", PKG.getSpecificationTitle());
     	
     	checkParameter(args);
 
-		Properties properties = loadConfig (configPath);
+		Properties properties = loadProperties (CONFIG_PATH + CONFIG_FILE);
 
     	Engine engine = Engine.getInstance(properties);
 
@@ -144,7 +145,7 @@ public class Codequick {
     		
     		for (String template : templates) {
     			for (String userTemplate : userTemplates) {
-    				if (template.equalsIgnoreCase(userTemplate)) {
+    				if (template.equalsIgnoreCase(userTemplate.trim())) {
     					matchTemplates.add(template);
     				}
     			}
@@ -168,7 +169,7 @@ public class Codequick {
     		
     		for (String definition : definitions) {
     			for (String userDefinition : userDefinitions) {
-    				if (definition.equalsIgnoreCase(userDefinition)) {
+    				if (definition.equalsIgnoreCase(userDefinition.trim())) {
     					matchDefinitions.add(definition);
     				}
     			}
@@ -192,7 +193,7 @@ public class Codequick {
     		
     		for (TableDef tableDef : tableDefList) {
     			for (String table : tables) {
-    				if (tableDef.getName().equalsIgnoreCase(table)) {
+    				if (tableDef.getName().equalsIgnoreCase(table.trim())) {
     					matchTables.add(tableDef);
     				}
     			}
@@ -205,16 +206,16 @@ public class Codequick {
 
     }
     
-	private static Properties loadConfig (String configPath) {
+	public static Properties loadProperties (String propertyFile) {
 		
-		System.out.format("Loading config properties.%n", configPath);
+		System.out.format("Loading properties %s.%n", propertyFile);
 		
 		Properties properties = new Properties();
 		 
     	try {
  
-    		//load a properties file
-    		properties.load(new FileInputStream(configPath));
+    		// Load a properties file
+    		properties.load(new FileInputStream(propertyFile));
     		
     	} catch (IOException ex) {
     		ex.printStackTrace();

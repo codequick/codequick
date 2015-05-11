@@ -36,7 +36,8 @@ public class DatabaseHelper {
     			ResultSet rs = md.getTables(null, schema, "%", new String [] {"TABLE"});
     			while (rs.next()) {
     				TableDef tableDef = new TableDef();
-    				for (String column : columns) {
+    				for (String metaColumn : columns) {
+    					String column = metaColumn.trim().toUpperCase();
     					if (column.equals("TABLE_CAT")) tableDef.setCatalog(getString(rs, "TABLE_CAT"));
     					if (column.equals("TABLE_SCHEM")) tableDef.setSchema(getString(rs, "TABLE_SCHEM"));
     					if (column.equals("TABLE_NAME")) tableDef.setName(getString(rs, "TABLE_NAME"));
@@ -83,7 +84,8 @@ public class DatabaseHelper {
 			ResultSet rs = md.getColumns(tableDef.getCatalog(), tableDef.getSchema(), tableDef.getName(), "%");
 			while (rs.next()) {
 				ColumnDef columnDef = new ColumnDef();
-				for (String column : columns) {
+				for (String metaColumn : columns) {
+					String column = metaColumn.trim().toUpperCase();
 					if (column.equals("TABLE_CAT")) columnDef.setCatalog(getString(rs, "TABLE_CAT"));
 					if (column.equals("TABLE_SCHEM")) columnDef.setSchema(getString(rs, "TABLE_SCHEM"));
 					if (column.equals("TABLE_NAME")) columnDef.setTableName(getString(rs, "TABLE_NAME"));

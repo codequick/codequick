@@ -13,8 +13,6 @@ public class JsonEngine extends Engine {
 	public static JsonEngine getInstance (Properties properties) {
 		JsonEngine engine = new JsonEngine ();
 		
-    	engine.configDefaults(properties);
-
 		return engine;
 	}
 	

@@ -31,6 +31,8 @@ public abstract class Engine {
 	protected String[] columnInfo;
 	
 	protected Properties properties;
+	protected Properties languageProperties;
+	protected Properties dbLangProperties;
 	
 	abstract void saveObject(TableDef tableDef, File file, String fileName);
 	
@@ -49,15 +51,15 @@ public abstract class Engine {
     		return null;
     	}
 		
-    	engine.configDefaults(properties);
+    	engine.properties = properties;
+		
+    	engine.configDefaults();
     	
 		return engine;
 		
 	}
 
-	protected void configDefaults(Properties properties) {
-		
-		this.properties = properties;
+	protected void configDefaults() {
 		
 		//get the property value
 		templatePath = properties.getProperty("templatePath");
@@ -74,6 +76,12 @@ public abstract class Engine {
 		tableInfo = properties.getProperty("exportTableInfo").split(",");
 		columnInfo = properties.getProperty("exportColumnInfo").split(",");
 
+		String language = properties.getProperty("language");
+		languageProperties = Codequick.loadProperties (Codequick.CONFIG_PATH + language + ".properties");
+		
+		String db = properties.getProperty("db");
+		dbLangProperties = Codequick.loadProperties (Codequick.CONFIG_PATH + language + "_" + db + ".properties");
+		
 		Analizer.setProperties(properties);
 		
 	}
@@ -113,8 +121,8 @@ public abstract class Engine {
 				columnDef.setPropertyName(getPropertyName(columnDef.getColumnName(), false));
 				columnDef.setShortColumnName(getShortColumnName(columnDef.getColumnName()));
 				columnDef.setIdentity(isIdentity(columnDef.getTypeName()));
-				columnDef.setPropertyType(getPlatformTypeName(columnDef.getTypeName(), columnDef.getColumnSize(), columnDef.getDecimalDigits()));
-				columnDef.setFieldType(getPlatformFieldTypeName(columnDef.getPropertyType()));
+				columnDef.setPropertyType(getLaguageTypeName(columnDef.getTypeName(), columnDef.getColumnSize(), columnDef.getDecimalDigits()));
+				columnDef.setFieldType(getLanguageGetter(columnDef.getPropertyType()));
 			}
 			
 			// Fill pk info for table
@@ -365,7 +373,41 @@ public abstract class Engine {
 		return result.toString();
 		
 	}
+
+	private String getLaguageTypeName (String sqlTypeName, Integer length, Integer decimal) {
+		String typeName = dbLangProperties.getProperty(sqlTypeName);
+		
+		if (typeName.isEmpty()) {
+			return "TypeNotDefined";
+		}
+		
+		if (typeName.contains(",")) {
+			String [] types = typeName.split(",");
+			for (String typeItem : types) {
+				String typeItemTrim = typeItem.trim();
+				int lenPos = typeItemTrim.indexOf(" ");
+				String parm = typeItemTrim.substring(lenPos+1, typeItemTrim.length()-1);
+				
+				if (decimal > 0) {
+					if ("decimal".equalsIgnoreCase(parm.trim())) {
+						return typeItemTrim.substring(0, lenPos);
+					}
+				} else {
+					if (!"decimal".equalsIgnoreCase(parm.trim())) {
+						Double len = Math.pow(2, 8 * new Double(parm.trim())); 
+						if (length < len) {
+							return typeItemTrim.substring(0, lenPos);
+						}
+					}
+				}
+			}
+			return "TypeNotFound";
+		} else {
+			return typeName.trim();
+		}
+	}
 	
+	@Deprecated
 	private String getPlatformTypeName (String sqlTypeName, Integer length, Integer decimal) {
 		String [][] types = null;
 		
@@ -437,7 +479,12 @@ public abstract class Engine {
 	private boolean isIdentity (String typeName) {
 		return typeName.indexOf("identity") > -1 || typeName.indexOf("serial") > -1;
 	}
+
+	private String getLanguageGetter (String typeName) {
+		return languageProperties.getProperty(typeName);
+	}
 	
+	@Deprecated
 	private String getPlatformFieldTypeName (String typeName) {
 		String [][] types = new String[][] { 
 				{"String", "String"}

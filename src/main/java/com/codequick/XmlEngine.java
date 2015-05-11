@@ -18,8 +18,6 @@ public class XmlEngine extends Engine {
 	public static XmlEngine getInstance (Properties properties) {
 		XmlEngine engine = new XmlEngine ();
 		
-    	engine.configDefaults(properties);
-
 		return engine;
 	}
 	
