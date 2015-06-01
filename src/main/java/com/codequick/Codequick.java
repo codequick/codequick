@@ -105,7 +105,7 @@ public class Codequick {
     	File path = new File(engine.templatePath);
     	File[] files = path.listFiles(new FilenameFilter() {
     	    public boolean accept(File dir, String name) {
-    	        return name.toLowerCase().endsWith(".cw");
+    	        return name.toLowerCase().endsWith(".cq");
     	    }
     	});
     	
