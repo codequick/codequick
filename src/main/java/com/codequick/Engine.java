@@ -377,7 +377,7 @@ public abstract class Engine {
 	private String getLaguageTypeName (String sqlTypeName, Integer length, Integer decimal) {
 		String typeName = dbLangProperties.getProperty(sqlTypeName);
 		
-		if (typeName.isEmpty()) {
+		if (typeName == null || typeName.isEmpty()) {
 			return "TypeNotDefined";
 		}
 		
