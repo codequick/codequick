@@ -41,7 +41,6 @@ public class DriverShell implements Driver {
 		return this.driver.jdbcCompliant();
 	}
 
-	@Override
 	public Logger getParentLogger() throws SQLFeatureNotSupportedException {
 		// TODO Auto-generated method stub
 		return null;
