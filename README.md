@@ -12,7 +12,7 @@ sample-model.sql
 Commands to create eclipse project, compile, assembly, install, export and build files.
 
 Create eclipse project:
-mvn eclipse:project
+mvn eclipse:eclipse
 
 Compile:
 mvn clean install
