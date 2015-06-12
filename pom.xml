@@ -17,9 +17,9 @@
 		</license>
 	</licenses>
 	<scm>
-		<connection>scm:git:git@github.com:codequick/codequick.git</connection>
-		<url>scm:git:git@github.com:codequick/codequick.git</url>
-		<developerConnection>scm:git:git@github.com:codequick/codequick.git</developerConnection>
+		<connection>scm:git:codequick@github.com:codequick/codequick.git</connection>
+		<url>scm:git:codequick@github.com:codequick/codequick.git</url>
+		<developerConnection>scm:git:[fetch=]http://ithub.com/codequick/codequick[push=]ssh://codequick@github.com:codequick/codequick.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
 	<properties>
@@ -135,13 +135,7 @@
 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
 							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
 						</manifest>
-						<!-- 
-						<manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
-						 -->
 					</archive>
-					<!-- 
-					<useDefaultManifestFile>true</useDefaultManifestFile>
-					 -->
 				</configuration>
 			</plugin>
 			<!-- set this project compiler to jdk version 1.7 -->
@@ -152,12 +146,6 @@
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
-					<!--
-					<showDeprecation>true</showDeprecation>
-					<showWarnings>true</showWarnings>
-					<executable>${env.JAVA_HOME}/bin/javac</executable>
-					<fork>true</fork>
-					-->
 				</configuration>
 			</plugin>
 			<plugin>
