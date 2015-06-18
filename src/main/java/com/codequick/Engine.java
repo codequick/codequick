@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.codequick.model.ColumnDef;
 import com.codequick.model.TableDef;
 
@@ -383,10 +385,12 @@ public abstract class Engine {
 		
 		if (typeName.contains(",")) {
 			String [] types = typeName.split(",");
+			String maxStr = StringUtils.leftPad("9", length, "9");
+			Long max = new Long (maxStr);
 			for (String typeItem : types) {
 				String typeItemTrim = typeItem.trim();
 				int lenPos = typeItemTrim.indexOf(" ");
-				String parm = typeItemTrim.substring(lenPos+1, typeItemTrim.length()-1);
+				String parm = typeItemTrim.substring(lenPos+2, typeItemTrim.length()-1);
 				
 				if (decimal > 0) {
 					if ("decimal".equalsIgnoreCase(parm.trim())) {
@@ -394,8 +398,8 @@ public abstract class Engine {
 					}
 				} else {
 					if (!"decimal".equalsIgnoreCase(parm.trim())) {
-						Double len = Math.pow(2, 8 * new Double(parm.trim())); 
-						if (length < len) {
+						Double len = Math.pow(2, 8 * new Double(parm.trim()));
+						if (max < len) {
 							return typeItemTrim.substring(0, lenPos);
 						}
 					}
