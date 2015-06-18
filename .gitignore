@@ -1,0 +1,8 @@
+/.project
+/.classpath
+/target/
+/RemoteSystemsTempFiles/
+/pom.xml.releaseBackup
+/src/main/generated/
+/.metadata/
+/.settings/
