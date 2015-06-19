@@ -35,7 +35,7 @@ public class XmlEngine extends Engine {
 			jaxbMarshaller.marshal(tableDef, file);
 			jaxbMarshaller.marshal(tableDef, System.out);
 
-			System.out.format("Creating file %s.", fileName);
+			System.out.format("Creating file %s.%n", fileName);
 
 		} catch (JAXBException e) {
 			e.printStackTrace();
@@ -48,7 +48,7 @@ public class XmlEngine extends Engine {
 
 		try {
 
-			System.out.format("Loading file %s.", fileName);
+			System.out.format("Loading file %s.%n", fileName);
 
 			File file = new File(fileName);
 			if (file.exists() && file.isFile()) {
@@ -58,11 +58,11 @@ public class XmlEngine extends Engine {
 				TableDef tableDef = (TableDef) jaxbUnmarshaller.unmarshal(file);
 				return tableDef;
 			} else {
-				System.err.format("File %s not found.", fileName);
+				System.err.format("File %s not found.%n", fileName);
 			}
 			
 		} catch (JAXBException e) {
-			System.err.format("Error to bind file %s into object", fileName);
+			System.err.format("Error to bind file %s into object.%n", fileName);
 //			e.printStackTrace();
 		}
 		
