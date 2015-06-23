@@ -415,7 +415,6 @@ public abstract class Engine {
 			return typeName.trim();
 		}
 	}
-	
 
 	private boolean isIdentity (String typeName) {
 		return typeName.indexOf("identity") > -1 || typeName.indexOf("serial") > -1;
