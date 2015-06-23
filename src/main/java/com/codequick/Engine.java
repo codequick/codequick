@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.util.List;
 import java.util.Properties;
@@ -386,7 +387,7 @@ public abstract class Engine {
 		if (typeName.contains(",")) {
 			String [] types = typeName.split(",");
 			String maxStr = StringUtils.leftPad("9", length, "9");
-			Long max = new Long (maxStr);
+			BigInteger max = new BigInteger (maxStr);
 			for (String typeItem : types) {
 				String typeItemTrim = typeItem.trim();
 				int lenPos = typeItemTrim.indexOf(" ");
@@ -396,12 +397,16 @@ public abstract class Engine {
 					if ("decimal".equalsIgnoreCase(parm.trim())) {
 						return typeItemTrim.substring(0, lenPos);
 					}
-				} else {
+				} else if (max.compareTo(new BigInteger(Long.MAX_VALUE + "")) <= 0) {
 					if (!"decimal".equalsIgnoreCase(parm.trim())) {
 						Double len = Math.pow(2, 8 * new Double(parm.trim()));
-						if (max < len) {
+						if (max.longValue() < len) {
 							return typeItemTrim.substring(0, lenPos);
 						}
+					}
+				} else {
+					if ("".equals(parm)) {
+						return typeItemTrim.substring(0, lenPos);
 					}
 				}
 			}
@@ -411,114 +416,13 @@ public abstract class Engine {
 		}
 	}
 	
-	@Deprecated
-	private String getPlatformTypeName (String sqlTypeName, Integer length, Integer decimal) {
-		String [][] types = null;
-		
-		types = new String[][] { 
-				{"CHAR", "String"} // Types.CHAR
-				, {"VARCHAR", "String"} // Types.VARCHAR
-				, {"LONGVARCHAR", "String"} // Types.LONGVARCHAR
-				, {"NUMERIC", "java.math.BigDecimal"} // Types.NUMERIC
-				, {"DECIMAL", "java.math.BigDecimal"} // Types.DECIMAL
-				, {"BIT", "Boolean"} // Types.BIT
-				, {"BOOLEAN", "Boolean"} // Types.BOOLEAN
-				, {"TINYINT", "byte"} // Types.TINYINT
-				, {"SMALLINT", "Short"} // Types.SMALLINT
-				, {"INTEGER", "Integer"} // Types.INTEGER
-				, {"BIGINT", "Long"} // Types.BIGINT
-				, {"REAL", "Float"} // Types.REAL
-				, {"FLOAT", "Double"} // Types.FLOAT
-				, {"DOUBLE", "Double"} // Types.DOUBLE
-				, {"BINARY", "byte[]"}  // Types.BINARY
-				, {"VARBINARY", "byte[]"} // Types.VARBINARY
-				, {"LONGVARBINARY", "byte[]"} // Types.LONGVARBINARY
-				, {"DATE", "java.util.Date"} // Types.DATE
-				, {"TIME", "java.sql.Time"} // Types.TIME
-				, {"TIMESTAMP", "java.sql.Timestamp"} // Types.TIMESTAMP
-				, {"CLOB", "Clob"} // Types.CLOB
-				, {"BLOB", "Blob"} // Types.BLOB
-				, {"ARRAY", "Array"} // Types.ARRAY
-				, {"DISTINCT", ""} // Types.DISTINCT
-				, {"STRUCT", "Struct"} // Types.STRUCT
-				, {"REF", "Ref"} // Types.REF
-				, {"DATALINK", "java.net.URL"} // Types.DATALINK
-				, {"JAVA_OBJECT", ""} // Types.JAVA_OBJECT
-				, {"text", "String"} // Types.LONGVARCHAR
-				, {"datetime", "java.util.Date"} // Types.TIME
-				, {"numeric() identity", "Integer"} //
-				// PostgreSQL
-				, {"serial", "Integer"} //
-				, {"bool", "Boolean"} // Types.BOOLEAN
-				, {"int4", "Integer"} //
-				, {"int2", "Short"} //
-				, {"float4", "Float"} //
-				, {"float8", "Double"} //
-				, {"bpchar", "String"} //
-		};
-		
-		for (String[] type : types) {
-			if (type[0].equalsIgnoreCase(sqlTypeName)) {
-				if (type[0].equals("NUMERIC")) {
-					if (decimal > 0) {
-						return type[1];
-					} else if (length < 3) {
-						return "Byte";
-					} else if (length < 5) {
-						return "Short";
-					} else if (length < 10) {
-						return "Integer";
-					} else {
-						return "Long";
-					}
-				} else {
-					return type[1];
-				}
-			}
-		}
-		
-		return "";
-	}
-	
+
 	private boolean isIdentity (String typeName) {
 		return typeName.indexOf("identity") > -1 || typeName.indexOf("serial") > -1;
 	}
 
 	private String getLanguageGetter (String typeName) {
 		return languageProperties.getProperty(typeName);
-	}
-	
-	@Deprecated
-	private String getPlatformFieldTypeName (String typeName) {
-		String [][] types = new String[][] { 
-				{"String", "String"}
-				, {"java.math.BigDecimal", "BigDecimal"}
-				, {"Boolean", "Boolean"}
-				, {"byte", "Byte"}
-				, {"Short", "Short"}
-				, {"Integer", "Int"}
-				, {"Long", "Long"}
-				, {"Float", "Float"}
-				, {"Double", "Double"}
-				, {"byte[]", "Byte[]"}
-				, {"java.util.Date", "Date"}
-				, {"java.sql.Time", "Time"}
-				, {"java.sql.Timestamp", "Timestamp"}
-				, {"Clob", "Clob"}
-				, {"Blob", "Blob"}
-				, {"Array", "Array"}
-				, {"Struct", "Struct"}
-				, {"Ref", "Ref"}
-				, {"java.net.URL", "java.net.URL"}
-		};
-		
-		for (String[] type : types) {
-			if (type[0].equalsIgnoreCase(typeName)) {
-				return type[1];
-			}
-		}
-		
-		return "";
 	}
 	
 	private StringBuffer getFile (File file) {
