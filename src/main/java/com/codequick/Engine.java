@@ -286,7 +286,7 @@ public abstract class Engine {
 			int i=0;
 			for (; i < ignoreColumnPrefix.length(); i++) {
 				if (ignoreColumnPrefix.charAt(i) != '?') {
-					if (ignoreColumnPrefix.charAt(i) != columnName.charAt(i)) break;
+					if (i > columnName.length() || ignoreColumnPrefix.charAt(i) != columnName.charAt(i)) break;
 				}
 			}
 			if (i == ignoreColumnPrefix.length()) {
@@ -322,7 +322,7 @@ public abstract class Engine {
 			int i=0;
 			for (; i < ignoreColumnPrefix.length(); i++) {
 				if (ignoreColumnPrefix.charAt(i) != '?') {
-					if (ignoreColumnPrefix.charAt(i) != columnName.charAt(i)) break;
+					if (i > columnName.length() || ignoreColumnPrefix.charAt(i) != columnName.charAt(i)) break;
 				}
 			}
 			if (i == ignoreColumnPrefix.length()) {
