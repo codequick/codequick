@@ -22,8 +22,8 @@ public class Codequick {
 	private static boolean isExport;
 	private static boolean isBuild;
 	
-	public static final String CONFIG_PATH = WORKING_DIRECTORY + "/config/";
-	private static final String CONFIG_FILE = "config.properties";
+	public static String CONFIG_PATH = WORKING_DIRECTORY + "/config/";
+	private static String CONFIG_FILE = "config.properties";
 	private static final Package PKG = Codequick.class.getPackage();
 	
     public static void main (String[] args) throws Exception {
@@ -56,7 +56,7 @@ public class Codequick {
     	
     	System.out.format("Checking for parameters.%n");
     	
-    	if (args == null || args.length != 1) {
+    	if (args == null || (args.length < 1 && args.length > 2)) {
     		System.err.format("Argument error: Number of parameters is invalid.%n");
     		System.exit(1);
     	}
@@ -66,6 +66,12 @@ public class Codequick {
     		
     		if (arg.equalsIgnoreCase("-export")) isExport = true;
     		if (arg.equalsIgnoreCase("-build")) isBuild = true;
+    		if (arg.startsWith("-config")) {
+    			int start = arg.indexOf("=");
+    			int lastBar = arg.lastIndexOf("/");
+    			CONFIG_PATH = arg.substring(start+1, lastBar+1);
+    			CONFIG_FILE = arg.substring(lastBar+1, arg.length());
+    		}
     	}
     	
     	if ((!isExport && !isBuild) || (isExport && isBuild)) {
@@ -86,10 +92,10 @@ public class Codequick {
     	String password = engine.getProperties().getProperty("password");
     	String schemas = engine.getProperties().getProperty("schemas");
     	
-    	// TODO get external connection
+    	// Getting external connection (from config.properties)
     	Connection connection = DBConnectionFactory.getConnection(path, driver, url, user, password);
     	
-    	// TODO get table list from external
+    	// Getting table list from external (from config.properties)
     	List<TableDef> tableDefList = DatabaseHelper.listTables(connection, schemas, engine.getProperties().getProperty("exportTableInfo").split(","));
     	
     	int count = engine.export(connection, filterTables(engine, tableDefList));
@@ -109,7 +115,7 @@ public class Codequick {
     	    }
     	});
     	
-    	// TODO get external list of templates
+    	// Getting external list of templates (from config.properties)
     	List<String> templates = new ArrayList<String>();
     	for (File file : files) {
     		templates.add(file.getName());
@@ -122,7 +128,7 @@ public class Codequick {
     	    }
     	});
     	
-    	// TODO get external list of definitions
+    	// Getting external list of definitions (from config.properties)
     	List<String> definitions = new ArrayList<String>();
     	for (File file : files) {
     		definitions.add(file.getName());
