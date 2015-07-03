@@ -68,9 +68,14 @@ public class Codequick {
     		if (arg.equalsIgnoreCase("-build")) isBuild = true;
     		if (arg.startsWith("-config")) {
     			int start = arg.indexOf("=");
-    			int lastBar = arg.lastIndexOf("/");
-    			CONFIG_PATH = arg.substring(start+1, lastBar+1);
-    			CONFIG_FILE = arg.substring(lastBar+1, arg.length());
+    			if (arg.length() >= start) {
+    				int lastBar = arg.lastIndexOf("/");
+    				if (lastBar < 0) {
+    					lastBar = arg.lastIndexOf("\\");
+    				}
+    				CONFIG_PATH = arg.substring(start+1, lastBar+1);
+    				CONFIG_FILE = arg.substring(lastBar+1, arg.length());
+    			}
     		}
     	}
     	
