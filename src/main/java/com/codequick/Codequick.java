@@ -100,8 +100,15 @@ public class Codequick {
     	// Getting external connection (from config.properties)
     	Connection connection = DBConnectionFactory.getConnection(path, driver, url, user, password);
     	
+    	// Table types to list
+    	String tableTypes = engine.getProperties().getProperty("tableTypes");
+    	
+    	if (tableTypes == null || "".equals(tableTypes.trim())) {
+    		tableTypes = "TABLE, VIEW";
+    	}
+    	
     	// Getting table list from external (from config.properties)
-    	List<TableDef> tableDefList = DatabaseHelper.listTables(connection, schemas, engine.getProperties().getProperty("exportTableInfo").split(","));
+    	List<TableDef> tableDefList = DatabaseHelper.listTables(connection, schemas, engine.getProperties().getProperty("exportTableInfo").split(","), tableTypes);
     	
     	int count = engine.export(connection, filterTables(engine, tableDefList));
     	
