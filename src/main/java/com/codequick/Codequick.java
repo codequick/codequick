@@ -132,6 +132,11 @@ public class Codequick {
     	    }
     	});
     	
+    	if (files == null) {
+    		System.out.format("There is no template files found at path%s.%n", engine.templatePath);
+    		System.exit(1);
+    	}
+    		
     	// Getting external list of templates (from config.properties)
     	List<String> templates = new ArrayList<String>();
     	for (File file : files) {
@@ -145,6 +150,11 @@ public class Codequick {
     	    }
     	});
     	
+    	if (files == null) {
+    		System.out.format("There is no metadata files found at path%s.%n", engine.exportPath);
+    		System.exit(1);
+    	}
+    		
     	// Getting external list of definitions (from config.properties)
     	List<String> definitions = new ArrayList<String>();
     	for (File file : files) {

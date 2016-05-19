@@ -167,6 +167,10 @@ public abstract class Engine {
     		System.err.format("There is no template to build the files.%n");
 		}
 		
+		if (definitions.size() == 0) {
+    		System.err.format("There is no metadata to build the files.%n");
+		}
+		
 		for (String templateName : templates) {
 			
 			String fileName = templatePath + templateName;
