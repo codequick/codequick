@@ -96,6 +96,7 @@ public class Codequick {
     	String user = engine.getProperties().getProperty("userName");
     	String password = engine.getProperties().getProperty("password");
     	String schemas = engine.getProperties().getProperty("schemas");
+    	String catalog = engine.getProperties().getProperty("catalog");
     	
     	// Getting external connection (from config.properties)
     	Connection connection = DBConnectionFactory.getConnection(path, driver, url, user, password);
@@ -108,7 +109,11 @@ public class Codequick {
     	}
     	
     	// Getting table list from external (from config.properties)
-    	List<TableDef> tableDefList = DatabaseHelper.listTables(connection, schemas, engine.getProperties().getProperty("exportTableInfo").split(","), tableTypes);
+    	List<TableDef> tableDefList = DatabaseHelper.listTables(connection
+    			, catalog
+    			, schemas
+    			, engine.getProperties().getProperty("exportTableInfo").split(",")
+    			, tableTypes);
     	
     	int count = engine.export(connection, filterTables(engine, tableDefList));
     	

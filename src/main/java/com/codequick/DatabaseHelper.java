@@ -15,7 +15,7 @@ public class DatabaseHelper {
 	// http://docs.oracle.com/javase/6/docs/api/java/sql/DatabaseMetaData.html#getTableTypes()
 	// getImportedKeys
 	
-	public static List<TableDef> listTables (Connection connection, String schemas, String[] columns, String tableTypes) {
+	public static List<TableDef> listTables (Connection connection, String catalog, String schemas, String[] columns, String tableTypes) {
 		
 		if (connection == null) {
 			System.err.format("Database connection error: Cannot connect with database.%n");
@@ -34,7 +34,7 @@ public class DatabaseHelper {
     		
     		try {
     			md = connection.getMetaData();
-    			ResultSet rs = md.getTables(null, schema, "%", tableTypeList);
+    			ResultSet rs = md.getTables(catalog, schema, "%", tableTypeList);
     			while (rs.next()) {
     				TableDef tableDef = new TableDef();
     				for (String metaColumn : columns) {
