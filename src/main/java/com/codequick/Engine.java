@@ -95,17 +95,6 @@ public abstract class Engine {
 		
 		int count = 0;
 		
-		// Empty path
-//		File path = new File(exportPath);
-
-//		System.out.format("Deleting old files below path %s.%n", exportPath);
-
-//		try {
-//			FileUtils.deleteDirectory(path);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-		
 		// Generate xml for tables
 		for (TableDef tableDef : tableDefList) {
 
