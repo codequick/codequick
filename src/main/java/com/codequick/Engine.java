@@ -282,7 +282,7 @@ public abstract class Engine {
 		
 		String name = "";
 		
-		if (ignoreColumnPrefix != null) {
+		if (ignoreColumnPrefix != null && columnName.length() > ignoreColumnPrefix.length()) {
 			int i=0;
 			for (; i < ignoreColumnPrefix.length(); i++) {
 				if (ignoreColumnPrefix.charAt(i) != '?') {
@@ -318,7 +318,7 @@ public abstract class Engine {
 		
 		String name = "";
 		
-		if (ignoreColumnPrefix != null) {
+		if (ignoreColumnPrefix != null && columnName.length() > ignoreColumnPrefix.length()) {
 			int i=0;
 			for (; i < ignoreColumnPrefix.length(); i++) {
 				if (ignoreColumnPrefix.charAt(i) != '?') {
