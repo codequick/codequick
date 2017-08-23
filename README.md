@@ -7,8 +7,8 @@ To setup the Codequick see link [Setup](https://github.com/codequick/codequick/w
 ## Features
 To this version, the features working are:
 
-- Create templates files *'.cq'* with proprietary language;
-- Connect to the follow dabasases (Oracle, SQL Server, DB2, PostgreSQL, H2 - in progress);
+- Create templates files *'.cq'* through proprietary language;
+- Connect to the following dabasases (Oracle, SQL Server, DB2, PostgreSQL, H2 - in progress);
 - File configuration for language and database types;
 - File configuration for project with custom variables to use in templates files;
 - Export database metadata in xml format;
