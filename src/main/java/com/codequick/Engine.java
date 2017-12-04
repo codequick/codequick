@@ -196,7 +196,9 @@ public abstract class Engine {
 								
 								String filePath = Analizer.getFilePath() != null ? Analizer.getFilePath() + PATH_SEPARATOR : "";
 								
-								String targetFileName = buildPath + module + filePath +  Analizer.getFilePrefix() + tableDef.getClassName() + Analizer.getFileSufix();
+								String fileN = Analizer.getFilePrefix() + tableDef.getClassName() + Analizer.getFileSufix();
+								
+								String targetFileName = buildPath + module + filePath + (Analizer.isLowerCaseFile() ? StringUtils.uncapitalize(fileN) : fileN);
 								
 								System.out.format("Deleting possible old file %s.%n", targetFileName);
 								

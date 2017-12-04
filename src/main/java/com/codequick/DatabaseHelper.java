@@ -49,6 +49,7 @@ public class DatabaseHelper {
     					if (column.equals("TYPE_NAME")) tableDef.setTypeName(getString(rs, "TYPE_NAME"));
     					if (column.equals("SELF_REFERENCING_COL_NAME")) tableDef.setSelfReferencingColName(getString(rs, "SELF_REFERENCING_COL_NAME"));
     					if (column.equals("REF_GENERATION")) tableDef.setRefGeneration(getString(rs, "REF_GENERATION"));
+    					if (column.equals("COLUMN_PREFIX")) tableDef.setColumnPrefix(getString(rs, "COLUMN_PREFIX"));
     				}
     				tableDefList.add(tableDef);
     				
@@ -63,6 +64,7 @@ public class DatabaseHelper {
     				System.out.format("TYPE_NAME................: %s%n", tableDef.getTypeName());
     				System.out.format("SELF_REFERENCING_COL_NAME: %s%n", tableDef.getSelfReferencingColName());
     				System.out.format("REF_GENERATION...........: %s%n", tableDef.getRefGeneration());
+    				System.out.format("COLUMN_PREFIX............: %s%n", tableDef.getColumnPrefix());
     				System.out.format("+-------------------------------------------------------+%n%n");
     			}
     		} catch (SQLException e) {
@@ -91,6 +93,7 @@ public class DatabaseHelper {
 					if (column.equals("TABLE_SCHEM")) columnDef.setSchema(getString(rs, "TABLE_SCHEM"));
 					if (column.equals("TABLE_NAME")) columnDef.setTableName(getString(rs, "TABLE_NAME"));
 					if (column.equals("COLUMN_NAME")) columnDef.setColumnName(getString(rs, "COLUMN_NAME"));
+					if (column.equals("COLUMN_PREFIX")) columnDef.setColumnPrefix(getString(rs, "COLUMN_PREFIX"));
 					if (column.equals("DATA_TYPE")) columnDef.setDataType(getInt(rs, "DATA_TYPE"));
 					if (column.equals("TYPE_NAME")) columnDef.setTypeName(getString(rs, "TYPE_NAME"));
 					if (column.equals("COLUMN_SIZE")) columnDef.setColumnSize(getInt(rs, "COLUMN_SIZE"));
@@ -115,6 +118,7 @@ public class DatabaseHelper {
 				System.out.format("TABLE_SCHEM......: %s%n", columnDef.getSchema());
 				System.out.format("TABLE_NAME.......: %s%n", columnDef.getTableName());
 				System.out.format("COLUMN_NAME......: %s%n", columnDef.getColumnName());
+				System.out.format("COLUMN_PREFIX....: %s%n", columnDef.getColumnPrefix());
 				System.out.format("DATA_TYPE........: %s%n", columnDef.getDataType());
 				System.out.format("TYPE_NAME........: %s%n", columnDef.getTypeName());
 				System.out.format("COLUMN_SIZE......: %s%n", columnDef.getColumnSize());

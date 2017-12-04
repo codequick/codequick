@@ -12,6 +12,7 @@
 			<element name="schema" type="string" minOccurs="0" maxOccurs="1" />
 			<element name="tableName" type="string" minOccurs="0" maxOccurs="1" />
 			<element name="columnName" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="columnPrefix" type="string" minOccurs="0" maxOccurs="1" />
 			<element name="dataType" type="int" minOccurs="0" maxOccurs="1" />
 			<element name="typeName" type="string" minOccurs="0" maxOccurs="1" />
 			<element name="columnSize" type="int" minOccurs="0" maxOccurs="1" />

@@ -24,6 +24,7 @@
 			<element name="packageName" type="string" minOccurs="0" maxOccurs="1" />
 			<element name="className" type="string" minOccurs="0" maxOccurs="1" />
 			<element name="pkName" type="string" minOccurs="0" maxOccurs="1" />
+			<element name="columnPrefix" type="string" minOccurs="0" maxOccurs="1" />
 			<element name="columnDefs" type="tns:ColumnDef" minOccurs="0" maxOccurs="unbounded" />
 		</sequence>
 	</complexType>

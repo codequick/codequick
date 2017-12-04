@@ -2,6 +2,8 @@ package com.codequick;
 
 import java.util.Properties;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.codequick.command.Command;
 import com.codequick.model.TableDef;
 
@@ -25,6 +27,7 @@ public class Analizer {
 	private static String filePath = "";
 	private static String filePrefix = "";
 	private static String fileSufix = "";
+	private static boolean lowerCaseFile = false;
 	
 	private static Properties properties;
 	
@@ -42,6 +45,7 @@ public class Analizer {
 			, {"filePath", "required:String,not null"}
 			, {"filePrefix", "required:String,null"}
 			, {"fileSufix", "required:String,null"}
+			, {"lowerCaseFile", "required:String,null"}
 			, {"content", "required:multiline,null", PACKAGE_NAME + "Content"}
 			, {"get", "optional:not null", PACKAGE_NAME + "Get"}
 			, {"getVar", "optional:not null", PACKAGE_NAME + "GetVar"}
@@ -59,6 +63,7 @@ public class Analizer {
 			, {"isString", "optional:String,not null", PACKAGE_NAME + "IsString"}
 			, {"delStart", "optional:String,not null@@;String,not null", PACKAGE_NAME + "DelStart"}
 			, {"delEnd", "optional:String,not null@@;String,not null", PACKAGE_NAME + "DelEnd"}
+			, {"newLine", "optional:String,null", PACKAGE_NAME + "NewLine"}
 	};
 	
 	public static boolean analize (StringBuffer template) {
@@ -253,8 +258,11 @@ public class Analizer {
 						aux = countEnd(content.substring(0, start), chars, aux);
 					}
 					if (theCommand[0].equals("if")) {
-						chars = new String[] {"\n"};
+						chars = new String[] {"\t"};
 						aux = countEnd(content.substring(0, start), chars, aux);
+						chars = new String[] {"\n"};
+						aux -= countStart(content.substring(0, start), chars, aux);
+						content = Analizer.removeStart(content, chars, 0);
 					}
 					break;
 				}
@@ -371,6 +379,12 @@ public class Analizer {
 			filePath = getContent(content).replaceAll("\\.", PATH_SEPARATOR + PATH_SEPARATOR);
 		if (command.equals("filePrefix")) filePrefix = getContent(content);
 		if (command.equals("fileSufix")) fileSufix = getContent(content);
+		if (command.equals("lowerCaseFile")) {
+			String v = getContent(content);
+			if (StringUtils.isNoneEmpty(v)) {
+				lowerCaseFile = Boolean.parseBoolean(getContent(content));
+			}
+		}
 	}
 	
 	public static String getTemplate() {
@@ -451,6 +465,14 @@ public class Analizer {
 	
 	public static void setProperties(Properties properties) {
 		Analizer.properties = properties;
+	}
+
+	public static boolean isLowerCaseFile() {
+		return lowerCaseFile;
+	}
+
+	public static void setLowerCaseFile(boolean lowerCaseFile) {
+		Analizer.lowerCaseFile = lowerCaseFile;
 	}
 	
 }
