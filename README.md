@@ -1,44 +1,16 @@
-# codequick
-A quick methody to generate code for CRUD applications.
+# Codequick 1.0
+The Codequick is a quick methody to generate code for CRUD applications.
 
-Database script files to create database structure on PostgreSQL.
+## Setup
+To setup the Codequick see link [Setup](https://github.com/codequick/codequick/wiki/Setup).
 
-Create role, database and schema:
-sample-db-create.sql
+## Features
+To this version, the features working are:
 
-Create sample model:
-sample-model.sql
-
-Commands to create eclipse project, compile, assembly, install, export and build files.
-
-Create eclipse project:
-mvn eclipse:eclipse
-
-Compile:
-mvn clean install
-
-Generate .jar file with dependencies:
-mvn assembly:assembly
-
-Install Codequick on target path:
-docs/install.bat
-
-Database driver configuration:
-Create the path /Projects/Codequick/drivers
-Put the driver into the path above
-
-Change the config.properties setting correctly the follow keys:
-db=[one of postgre, sqlserver, oracle - if other, needs to create lang_database.properties]
-driverPath=/Projects/codequick/drivers/[driver_file_name]
-driverName=[driver name]
-connectionUrl=[database url]
-userName=[database user]
-password=[database password]
-schemas=[schema]
-
-Export metadata files:
-/Projects/Codequick/export.bat
-
-Build target files:
-/Projects/Codequick/build.bat
+- Create templates files *'.cq'* through proprietary language;
+- Connect to the following dabasases (Oracle, SQL Server, DB2, PostgreSQL, H2 - in progress);
+- File configuration for language and database types;
+- File configuration for project with custom variables to use in templates files;
+- Export database metadata in xml format;
+- Build code according the template file and database metadata for target database and language and database types configuration;
 
